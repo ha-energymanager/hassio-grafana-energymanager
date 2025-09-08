@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.2.2
+ARG BUILD_FROM
 FROM $BUILD_FROM
 
 RUN apk add --no-cache grafana nginx

@@ -1,11 +1,16 @@
 #!/bin/sh
 set -e
 
-# start grafana
+mkdir -p /data/grafana/log /data/grafana/plugins /data/dashboards
+chown -R grafana:grafana /data/grafana /data/dashboards || true
+
+if [ -d /usr/share/grafana/default-dashboards ] && [ -z "$(ls -A /data/dashboards 2>/dev/null)" ]; then
+  cp -a /usr/share/grafana/default-dashboards/*.json /data/dashboards/ 2>/dev/null || true
+fi
+
 grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini &
 GRAF=$!
 
-# start nginx in foreground
 nginx -c /etc/nginx/nginx.conf -g "daemon off;" &
 NGINX=$!
 
@@ -15,6 +20,5 @@ term() {
 }
 trap term INT TERM
 
-# wait on either; then cleanly stop the other
 wait -n
 term

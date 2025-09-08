@@ -7,7 +7,7 @@ arch:
   - amd64
 startup: services
 boot: auto
-init: true
+init: false
 ingress: true
 ingress_port: 8099
 panel_icon: mdi:chart-line

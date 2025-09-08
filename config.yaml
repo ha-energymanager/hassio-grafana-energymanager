@@ -1,5 +1,6 @@
 name: "Grafana Energy Manager"
 slug: grafana-energymanager
+version: "0.1.0"
 description: "Custom Grafana addon with Energy Manager dashboards"
 arch:
   - aarch64

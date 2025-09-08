@@ -1,14 +1,15 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-RUN apk add --no-cache grafana nginx
+RUN apk add --no-cache grafana nginx tini
 
+# configs
 COPY rootfs/ /
 
-RUN test -x /init || (echo "ERROR: /init missing (no s6-overlay in base image)"; exit 1)
-RUN { test -x /command/with-contenv || test -x /usr/bin/with-contenv; } \
-  || (echo "ERROR: with-contenv wrapper missing (path mismatch)"; exit 1)
+# your supervisor script
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
-RUN chmod +x /etc/cont-init.d/00-s6-proof.sh \
-    && chmod +x /etc/services.d/grafana/run \
-    && chmod +x /etc/services.d/nginx/run
+# no s6: use tini as PID 1
+ENTRYPOINT ["/sbin/tini","-g","--"]
+CMD ["/run.sh"]

@@ -6,6 +6,8 @@ RUN apk add --no-cache grafana nginx tini
 # configs
 COPY rootfs/ /
 
+COPY dashboards/ /usr/share/grafana/default-dashboards/
+
 # your supervisor script
 COPY run.sh /run.sh
 RUN chmod +x /run.sh

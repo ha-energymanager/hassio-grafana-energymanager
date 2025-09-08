@@ -1,0 +1,11 @@
+{
+  "id": null,
+  "uid": "example",
+  "title": "Example Dashboard",
+  "tags": [],
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "refresh": "25s",
+  "panels": []
+}
